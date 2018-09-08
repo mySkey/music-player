@@ -330,7 +330,7 @@ window.addEventListener('DOMContentLoaded',function(e){
     timer = setInterval(update,100)
   }
 
-	var listBl = true; 
+	var listBl = true;  //指定菜单开关
 	//歌曲列表的打开关闭
 	listDom.addEventListener('click',function(){
 		if(listBl){
