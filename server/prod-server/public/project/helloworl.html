@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="./index.css">
+</head>
+<body>
+<div class="theme">express</div>
+<script>
+	if(!String.prototype.reverse){
+		String.prototype.reverse = function(){
+			return Array.prototype.reverse.call(this.split('')).join('')
+		}
+	}
+	var str = 'hello world';
+	document.write(str.reverse())
+</script>
+</body>
+</html>
