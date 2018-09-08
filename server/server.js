@@ -17,7 +17,6 @@ http.createServer(function (request, response) {
   //     response.write(data)
   //     response.end();
   // });
-<<<<<<< HEAD
   var lrc = url.parse(request.url,true).query.music;
   lrc = decodeURI(lrc); //encodeURI 编码 decodeURI 解码
   console.log(lrc)
@@ -29,16 +28,3 @@ http.createServer(function (request, response) {
 
 // 终端打印如下信息
 console.log('Server running at http://localhost:3000/');
-=======
-  var lrc = url.parse(request.url).pathname;
-  lrc = decodeURI(lrc); //encodeURI 编码 decodeURI 解码
-
-  var data = fs.readFileSync('./lrc'+ lrc +'.lrc');
-  response.end(data.toString())
-
-  
-}).listen(8888);
-
-// 终端打印如下信息
-console.log('Server running at http://localhost:8888/');
->>>>>>> 0428013c6b44bd3063a2f99ec78a5085af0ecd1a
