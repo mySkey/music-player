@@ -426,7 +426,7 @@ window.addEventListener('DOMContentLoaded',function(e){
 	//歌词文件加载
 	function ajaxGetHTML(music,callback) { 
       showLrcArr=[];timeArr=[];
-      var url = 'http://111.231.205.170:3000/lrc?music='+music;  
+      var url = 'http://localhost:3000/lrc?music='+music;  
       var xmlhttp = new XMLHttpRequest();  
       xmlhttp.onreadystatechange = function() {  
           if (xmlhttp.readyState == 4) {  
