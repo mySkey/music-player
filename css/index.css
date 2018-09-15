@@ -22,6 +22,7 @@ html,body{
 	box-sizing: border-box;
 	background-repeat: no-repeat;
 	background-size:100% 100%;
+	position: relative;
 }
 .music-list{
 	width: 0;
@@ -38,7 +39,8 @@ html,body{
 	box-sizing: border-box;
 	color:#ddd;
 	overflow-x: hidden;
-	overflow-y: scroll;
+	overflow-y: auto;
+	overflow-scrolling:touch;
 }
 .music-list-title{
 	color: #fff;
@@ -56,8 +58,11 @@ html,body{
 }
 header{
 	width: 100%;
-	height: 15%;
-	margin-top: 10%;
+	height: 25%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	padding-bottom: 40px;
 }
 .music-name{
 	font-size: 20px;
@@ -84,17 +89,50 @@ header{
 	height: 60%;
 	box-sizing: border-box;
 	text-align: center;
-	/*background: #00b388;*/
 	overflow-y: scroll;
+	overflow-scrolling:touch;
 	overflow-x: hidden;
-	display: flex;
-	justify-content: center;
 }
 .text-box{
 	width: 90%;
 	height: 100%;
-	
 	display: inline-block;
+	
+}
+.scroll-pro{
+	width:100%;
+	height:20px;
+	opacity: 0;
+	position: absolute;
+	top:calc(25% + 138px);
+	right:0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.lrc-time{
+	width:60px;
+	height:20px;
+	line-height: 20px;
+	color:#ddd;
+	text-shadow: 1px 1px 1px #999;
+}
+.wire{
+	width:calc(100% - 120px);
+	height:1px;
+	background: rgba(0,0,0,.5);
+}
+.lrc-play{
+	width:60px;
+	height:20px;
+	background: url('../images/play.png');
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+	background-position: 24px 0;
+}
+.lrc-null{
+	width:2px;
+	height:150px;
 }
 .text{
 	width: 100%;
@@ -189,4 +227,5 @@ header{
 @media screen and (min-width: 480px){
 	#container{width:375px;height:600px;overflow-x: hidden;}
 	.content{width:calc(100% + 32px)}
+	.wire{background: transparent;border-left: 30px solid #00b388;border-right: 40px solid #00b388;box-sizing: border-box;}
 }

@@ -131,6 +131,10 @@ window.addEventListener('DOMContentLoaded',function(e){
                 singer:'化晨宇'
              }
   ]
+  document.oncontextmenu=function(e){
+    //或者return false;
+    e.preventDefault();
+  };
 	e.preventDefault();
 	function Player(){
 		this.play = function(){
@@ -160,6 +164,9 @@ window.addEventListener('DOMContentLoaded',function(e){
 	var singerDom =document.getElementsByClassName('singer')[0];
 	var listDom =document.getElementsByClassName('list')[0];
 	var musicListDom =document.getElementsByClassName('music-list')[0];
+  var scrollProDom = document.getElementsByClassName('scroll-pro')[0];
+  var lrcPlayDom =document.getElementsByClassName('lrc-play')[0];
+  var lrcTimeDom = document.getElementsByClassName('lrc-time')[0];
 	var mark = true;
 	
 	pauseDom.onclick = play;
@@ -190,6 +197,15 @@ window.addEventListener('DOMContentLoaded',function(e){
 		var x = boxW*bili;
 			swiperDom.style.width = x +'px';
 			sliderDom.style.left = x +'px';
+    var curMinute = Math.floor(audioDom.currentTime/60),
+      curSecond = Math.floor(audioDom.currentTime%60),
+      tolSecond = Math.floor(audioDom.duration%60);
+      if(curSecond<10){
+        currentDom.innerHTML = curMinute +':0'+curSecond ;
+      }else{
+        currentDom.innerHTML = curMinute +':'+curSecond ;
+      }
+      tolSecond<10?totalDom.innerHTML = Math.floor(audioDom.duration/60)+ ':0'+tolSecond:totalDom.innerHTML = Math.floor(audioDom.duration/60)+ ':'+tolSecond;
 		//显示时间与音乐同步
 		checkLrc(audioDom.currentTime)
 		lrcDom = document.querySelectorAll('.lrc');
@@ -206,16 +222,10 @@ window.addEventListener('DOMContentLoaded',function(e){
     }
     console.log(currentLrc)
 		//同步滑动到歌词显示位置
+    if(phone){
+      scrollDom.onscroll = null;
+    }
 		scrollDom.scrollTop = 24*currentLrc;
-		var curMinute = Math.floor(audioDom.currentTime/60),
-				curSecond = Math.floor(audioDom.currentTime%60),
-				tolSecond = Math.floor(audioDom.duration%60);
-				if(curSecond<10){
-					currentDom.innerHTML = curMinute +':0'+curSecond ;
-				}else{
-					currentDom.innerHTML = curMinute +':'+curSecond ;
-				}
-			  tolSecond<10?totalDom.innerHTML = Math.floor(audioDom.duration/60)+ ':0'+tolSecond:totalDom.innerHTML = Math.floor(audioDom.duration/60)+ ':'+tolSecond;
 	}
 	//进度条拖动同步
 	sliderDom.addEventListener('touchstart',function(e){
@@ -289,6 +299,10 @@ window.addEventListener('DOMContentLoaded',function(e){
 			geciDom.innerHTML = musicList[num].text[i];
 			textDom.appendChild(geciDom);
 		}
+    //歌曲列表显示相应播放的
+    everyDoms.forEach(function(v,k){
+      v.style.color = k==num ? color() : '#ddd'
+    })
 	}
 
 	//下一曲
@@ -302,20 +316,45 @@ window.addEventListener('DOMContentLoaded',function(e){
 		if(num<0) num=0;
 		clearLrc()
 	},false);
-	//用户想滑动歌词查看，清除定时器
-  var scrollTimer;
-	scrollDom.ontouchmove=function(){
-		clearInterval(timer);clearTimeout(scrollTimer);
-		scrollTimer = setTimeout(function(){
-			timer = setInterval(update,100)
-		},2000)
-	}
-  scrollDom.onscroll=function(){
+	//用户想滑动歌词查看，清除定时器  电脑用户的户保留scroll清除定时器
+  var scrollTimer,phone;
+  var n = navigator.userAgent;
+  if (n.match(/Android/i) || n.match(/webOS/i) || n.match(/iPhone/i) || n.match(/iPad/i) || n.match(/iPod/i) || n.match(/BlackBerry/i)) {
+    phone = true
+  }else{
+    phone = false
+  }
+	scrollDom.ontouchmove=lookLrc
+  scrollDom.onscroll=lookLrc
+  function lookLrc(){
     clearInterval(timer);clearTimeout(scrollTimer);
+    //滑动歌词后点击播放
+    scrollProDom.style.opacity = 1;
+    currentLrc =  Math.round(scrollDom.scrollTop/24);
+    console.log(timeArr[currentLrc])
+    var m = Math.floor(timeArr[currentLrc]/60)<10 ? '0'+ Math.floor(timeArr[currentLrc]/60) : Math.floor(timeArr[currentLrc]/60)
+    var s = Math.floor(timeArr[currentLrc]%60)<10 ? '0'+Math.floor(timeArr[currentLrc]%60) :Math.floor(timeArr[currentLrc]%60)
+    lrcTimeDom.innerHTML = m+':'+s;
+    lrcClickPlay()
     scrollTimer = setTimeout(function(){
+      if(phone) scrollProDom.style.opacity = 0;
       timer = setInterval(update,100)
     },2000)
   }
+  //点击滑动歌词后播放相应的地方
+  function lrcClickPlay(){
+    lrcPlayDom.addEventListener('click',function(){
+      if(currentLrc>=timeArr.length-1){
+        currentLrc = timeArr.length-1
+      }
+      //console.log(timeArr[currentLrc],showLrcArr[currentLrc])
+      audioDom.currentTime = timeArr[currentLrc]
+      scrollProDom.style.opacity = 0;
+      xunran();
+    },false);
+  }
+
+  //切换歌曲是清除歌词
   function clearLrc(){
     scrollDom.scrollTop = 0;currentLrc=0;
     clearInterval(timer)
@@ -355,12 +394,13 @@ window.addEventListener('DOMContentLoaded',function(e){
 			}
 	},false);
 	//歌曲列表实现点击切换歌目
+  var everyDoms;
 	for(let j in musicList){
 		var everyDom = document.createElement('li');
 		everyDom.innerHTML = musicList[j].sing;
 		everyDom.setAttribute("class",'every');
 		musicListDom.appendChild(everyDom);
-    var everyDoms = document.querySelectorAll('.every');
+    everyDoms = document.querySelectorAll('.every');
     everyDoms[num].style.color = color(); 
 		everyDom.addEventListener('click',function(){
 			num = j;
@@ -386,7 +426,7 @@ window.addEventListener('DOMContentLoaded',function(e){
 	//歌词文件加载
 	function ajaxGetHTML(music,callback) { 
       showLrcArr=[];timeArr=[];
-      var url = 'http://localhost:3000/lrc?music='+music;  
+      var url = 'http://111.231.205.170:3000/lrc?music='+music;  
       var xmlhttp = new XMLHttpRequest();  
       xmlhttp.onreadystatechange = function() {  
           if (xmlhttp.readyState == 4) {  
@@ -397,6 +437,9 @@ window.addEventListener('DOMContentLoaded',function(e){
               lrcArr.forEach(function(v,k){
             		timeArr.push(v.slice(0,8))
              	  showLrcArr.push(v.slice(9,v.length))
+              })
+              timeArr = timeArr.map(function(v,k){
+                return v = Number(v.slice(0,2))*60 + Number(v.slice(3,5))
               })
               showLrcArr = showLrcArr.map(function(v){
               	return (v.length==0||v==' ')?v = '~ ~ ~ ~ ~':v
@@ -409,8 +452,8 @@ window.addEventListener('DOMContentLoaded',function(e){
       xmlhttp.send(null);  
   }
   //利用回调函数将歌词替换
-  ajaxGetHTML(musicList[0].sing,function(){
-  	musicList[0].text = showLrcArr;
+  ajaxGetHTML(musicList[num].sing,function(){
+  	musicList[num].text = showLrcArr;
   	xunran(true)
   })
 
@@ -419,9 +462,7 @@ window.addEventListener('DOMContentLoaded',function(e){
   function checkLrc(time){
   	time = Math.floor(time)
   	timeArr.forEach(function(v,k){
-  		let m = Number(v.slice(0,2))
-  		let s = Number(v.slice(3,5))
-  		if((m*60+s) <= time){
+  		if(v <= time){
   			currentLrc = k
   		}
   	})
