@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded',function(e){
-  var music_api_url = 'http://www.22family.com/dome/musics/'
-  var image_api_url = 'http://www.22family.com/dome/myplayer/images/bgs/'
+  var music_api_url = 'http://audio.22family.com/'
+  var image_api_url = 'http://audio.22family.com/myplayer/mini/'
 	var info=[];
 	var timeArr=[];
 	var showLrcArr=[];
@@ -220,7 +220,7 @@ window.addEventListener('DOMContentLoaded',function(e){
         lrcDom[i].style.fontSize = '15px';
       }
     }
-    console.log(currentLrc)
+    //console.log(currentLrc)
 		//同步滑动到歌词显示位置
     if(phone){
       scrollDom.onscroll = null;
@@ -268,8 +268,8 @@ window.addEventListener('DOMContentLoaded',function(e){
 		audioDom.src = music_api_url + musicList[num].musicUrl;
 		nameDom.innerHTML = musicList[num].sing;
 		singerDom.innerHTML = musicList[num].singer;
-		containerDom.style.backgroundSize = "100% 100%";
-    containerDom.style.background = 'url('+image_api_url + musicList[num].imgUrl +')';
+		//containerDom.style.backgroundSize = "100% 100%";
+    containerDom.style.background = 'url('+image_api_url + musicList[num].imgUrl +') 0 0 /cover';
 		
 		pauseDom.style.background = "url('images/pause.png')";
 		mark = true;
@@ -426,7 +426,7 @@ window.addEventListener('DOMContentLoaded',function(e){
 	//歌词文件加载
 	function ajaxGetHTML(music,callback) { 
       showLrcArr=[];timeArr=[];
-      var url = 'http://localhost:3000/lrc?music='+music;  
+      var url = 'http://blog.22family.com/pc/lrc?music='+music;  
       var xmlhttp = new XMLHttpRequest();  
       xmlhttp.onreadystatechange = function() {  
           if (xmlhttp.readyState == 4) {  
