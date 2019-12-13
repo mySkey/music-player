@@ -1,59 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-	<title>mySkey音乐播放器</title>
-	<link href="images/logo.png" rel="shortcut icon">
-	<link rel="stylesheet" href="css/reset.css">
-	<link rel="stylesheet" href="css/index.css">
-	<script src='js/musics.js'></script>
-	<script src='js/index.js'></script>
-</head>
-<body>
-<div id="container">	
-		<!-- <audio id="player" ></audio> -->
-		<audio loop autoplay="autoplay" id="player" ></audio>
-		<header>
-			<h3 class="music-name"></h3>
-			<h4 class="singer-list"><span class="heng">——</span><span class="singer"></span><span class="heng">——</span></h4>
-		</header>
-		<div class="content">
-			<div class="text-box">
-				<ul class="text">
-					<li class="detial"></li>
-				</ul>
-				<div class="lrc-null"></div>
-				<!-- 滑动歌词后点击歌词后的播放键，播放相应歌词 -->
-				<div class="scroll-pro">
-					<div class="lrc-time">05:10</div>
-					<div class="wire"></div>
-					<div class="lrc-play"></div>
-				</div>
-			</div>
-		</div>
-		<div class="progress">
-			<span class="current-time"></span>
-			<div class="box">
-				<div class="slider"></div>
-				<div class="swiper"></div>
-			</div>
-			<span class="total-time"></span>
-		</div>
-		<ul class="controls">
-			<li class="mode btn"></li>
-			<div class="mode-control">
-				<li class="after btn"></li>
-				<li class="pause btn"></li>
-				<li class="next btn"></li>
-			</div>
-			<li class="list btn"></li>
-		</ul>
-		<ul class="music-list">
-			<h3 class="music-list-title">歌曲清单</h3>
-		</ul>
-</div>
-
-	
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>mySkey音乐播放器</title>
+    <link href="images/logo.png" rel="shortcut icon" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <script src="js/index.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <!-- <audio id="player" ></audio> -->
+      <audio loop autoplay="autoplay" id="player"></audio>
+      <header>
+        <h3 class="music-name"></h3>
+        <h4 class="singer-list">
+          <span class="heng">——</span><span class="singer"></span
+          ><span class="heng">——</span>
+        </h4>
+      </header>
+      <div class="content">
+        <div class="text-box">
+          <ul class="text">
+            <li class="detial"></li>
+          </ul>
+          <div class="lrc-null"></div>
+          <!-- 滑动歌词后点击歌词后的播放键，播放相应歌词 -->
+          <div class="scroll-pro">
+            <div class="lrc-time">05:10</div>
+            <div class="wire"></div>
+            <div class="lrc-play"></div>
+          </div>
+        </div>
+      </div>
+      <div class="progress">
+        <span class="current-time"></span>
+        <div class="box">
+          <div class="slider"></div>
+          <div class="swiper"></div>
+        </div>
+        <span class="total-time"></span>
+      </div>
+      <ul class="controls">
+        <li class="mode btn"></li>
+        <div class="mode-control">
+          <li class="after btn"></li>
+          <li class="pause btn"></li>
+          <li class="next btn"></li>
+        </div>
+        <li class="list btn"></li>
+      </ul>
+      <ul class="music-list">
+        <h3 class="music-list-title">歌曲清单</h3>
+      </ul>
+    </div>
+  </body>
 </html>
